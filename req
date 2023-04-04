@@ -1,0 +1,43 @@
+import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+
+@Component({
+  selector: 'app-request',
+  templateUrl: './request.component.html',
+  styleUrls: ['./request.component.css']
+})
+export class RequestComponent {
+  env: string;
+  accNo: string;
+  historyThruDate: Date;
+  notesThruDate: Date;
+  includeHistory: string;
+  includeNotes: string;
+  email: string;
+
+  constructor(private http: HttpClient) { }
+
+  onSubmit() {
+    const formData = {
+      env: this.env,
+      accNo: this.accNo,
+      historyThruDate: this.historyThruDate,
+      notesThruDate: this.notesThruDate,
+      includeHistory: this.includeHistory,
+      includeNotes: this.includeNotes,
+      email: this.email
+    };
+
+    this.http.post('https://example.com/api/requests', formData)
+      .subscribe(
+        response => {
+          console.log('Success: ', response);
+          // Do something with the response
+        },
+        error => {
+          console.error('Error: ', error);
+          // Handle the error
+        }
+      );
+  }
+}
